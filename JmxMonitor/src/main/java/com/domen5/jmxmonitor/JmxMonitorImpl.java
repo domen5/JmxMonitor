@@ -5,10 +5,17 @@ import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
 import javax.management.MBeanServerConnection;
+import javax.management.MalformedObjectNameException;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
+import javax.management.ObjectName;
+import javax.management.ReflectionException;
 
 public class JmxMonitorImpl implements JmxMonitor {
 	private JMXServiceURL url;
@@ -23,10 +30,7 @@ public class JmxMonitorImpl implements JmxMonitor {
 
 	@Override
 	public List<String> getMBeanNames() throws IOException {
-		return  this.mbsc.queryNames(null, null)
-				.stream()
-				.map(o ->o.toString())
-				.collect(Collectors.toList());
+		return this.mbsc.queryNames(null, null).stream().map(o -> o.toString()).collect(Collectors.toList());
 	}
 
 	private static JMXServiceURL createConnectionURL(String host, int port) throws MalformedURLException {
@@ -37,16 +41,15 @@ public class JmxMonitorImpl implements JmxMonitor {
 	public List<String> getDomains() throws IOException {
 		return Arrays.asList(mbsc.getDomains());
 	}
-	
+
 	@Override
 	public int getMBeanCount() throws IOException {
 		return this.mbsc.getMBeanCount();
 	}
 
 	@Override
-	public String getMBean(String name) {
-		return name;
+	public Object getMBean(String objectName, String name) throws AttributeNotFoundException, InstanceNotFoundException,
+			MalformedObjectNameException, MBeanException, ReflectionException, IOException {
+		return this.mbsc.getAttribute(new ObjectName(objectName), name);
 	}
-
-
 }
