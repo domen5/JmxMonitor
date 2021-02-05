@@ -13,6 +13,7 @@ public interface JmxMonitor {
 	public List<String> getMBeanNames() throws IOException;
 	public List<String> getDomains() throws IOException;
 	public int getMBeanCount() throws IOException;
+	public List<String> getAttributesForObjectName(String objectName)  throws Exception;
 	public Object getMBean(String objectName, String name)
 	throws AttributeNotFoundException, InstanceNotFoundException,
 			MalformedObjectNameException, MBeanException, ReflectionException, IOException;	

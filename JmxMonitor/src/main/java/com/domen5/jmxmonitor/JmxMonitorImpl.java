@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.management.AttributeNotFoundException;
 import javax.management.InstanceNotFoundException;
+import javax.management.IntrospectionException;
+import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanException;
+import javax.management.MBeanInfo;
 import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import javax.management.remote.JMXConnector;
@@ -45,6 +49,19 @@ public class JmxMonitorImpl implements JmxMonitor {
 	@Override
 	public int getMBeanCount() throws IOException {
 		return this.mbsc.getMBeanCount();
+	}
+
+	@Override
+	public List<String> getAttributesForObjectName(String objectName) throws Exception {
+		try {
+			MBeanInfo info;
+			info = this.mbsc.getMBeanInfo(new ObjectName(objectName));
+			return Arrays.stream(info.getAttributes()).map(attr -> attr.getName()).collect(Collectors.toList());
+		} catch (InstanceNotFoundException | IntrospectionException | MalformedObjectNameException | ReflectionException
+				| IOException e) {
+			e.printStackTrace();
+			throw new Exception("Something went wrong while getting attributes.");
+		}
 	}
 
 	@Override
