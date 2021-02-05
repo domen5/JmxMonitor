@@ -102,8 +102,6 @@ public class MonitorWindow extends JFrame{
 
 	}
 
-
-
 	private long getData() {
 		try {
 			monitor.connect(host, port);

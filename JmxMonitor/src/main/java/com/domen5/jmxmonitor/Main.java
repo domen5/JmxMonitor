@@ -43,7 +43,7 @@ public class Main {
 				String attributeName= input("\nInsert AttributeName [Count]: ");
 				System.out.println(attributeName + ": " + monitor.getMBean(objectName, attributeName));
 			} else if (opt == 2) {
-				System.out.println("coming soon...");
+				javax.swing.SwingUtilities.invokeLater(() -> new MonitorWindow());
 			} else {
 				System.out.println("Wrong input.");
 			}
@@ -51,6 +51,7 @@ public class Main {
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			System.exit(1);
 		}
 	}
 
