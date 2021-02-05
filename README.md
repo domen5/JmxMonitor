@@ -3,13 +3,13 @@
 
 ## Components
 JmxMonitor has a CLI Main application that offers you 2 options:
-[1] Connect to a remote JMX Server application and get a MBean from it.
-[2] Open a GUI to show a chart of the Heap Memory Usage.
+* [1] Connect to a remote JMX Server application and get a MBean from it.
+* [2] Open a GUI to show a chart of the Heap Memory Usage.
 
 ## Developement
 This app was developed in Java 11 with Apache Maven and VS CODE.
 
-## Complinig and running
+## Compilinig and Running
 Main app JmxMonitor can be compiled with:
 ```shell
 mvn package
