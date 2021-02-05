@@ -100,7 +100,7 @@ public class MonitorWindow extends JFrame {
 						dataset.appendData(newData);
 						if (!noticeFlag && lData > threshold) {
 							JOptionPane.showMessageDialog(frame,
-									ATTRIBUTE_NAME + ": " + lData + "Bytes excedes threshold value: " + threshold
+									ATTRIBUTE_NAME + ": " + lData + " Bytes excedes threshold value: " + threshold
 									+ " Bytes \nThis will not be shown again.");
 							noticeFlag = true;
 						}
