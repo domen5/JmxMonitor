@@ -1,18 +1,8 @@
 package com.domen5.jmxmonitor;
 
 public class Main {
-	private static final String WELCOME_MSG = "[1] Read an MBean from a remote JMXServer\n[2] Show a chart for a remote JMXServer Heap Memory Usage\n>";
-	private static String host = "127.0.0.1";
-	private static final String DEFAULT_HOST = "127.0.0.1";
-	private static int port = 9999;
-	private static final int DEFAULT_PORT = 9999;
-	private static final String objectName = "com.domen5.jmxserver:type=Counter";
-	private static final String attributeName = "Count";
 
 	public static void main(String[] args) {
-		// String objectName = "com.domen5.jmxserver:type=Counter";
-		// String attributeName = "Count";
-
 		try {
 			final int opt = intInput(WELCOME_MSG);
 
@@ -42,12 +32,14 @@ public class Main {
 					.forEach(n -> System.out.println(n));
 				String attributeName= input("\nInsert AttributeName [Count]: ");
 				System.out.println(attributeName + ": " + monitor.getMBean(objectName, attributeName));
+				System.exit(0);
 			} else if (opt == 2) {
 				javax.swing.SwingUtilities.invokeLater(() -> new MonitorWindow());
 			} else {
 				System.out.println("Wrong input.");
+				System.exit(0);
 			}
-			System.exit(0);
+
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -66,4 +58,6 @@ public class Main {
 		String tmp = System.console().readLine();
 		return Integer.parseInt(tmp);
 	}
+
+	private static final String WELCOME_MSG = "[1] Read an MBean from a remote JMXServer\n[2] Show a chart for a remote JMXServer Heap Memory Usage\n>";
 }
