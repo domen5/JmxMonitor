@@ -35,7 +35,7 @@ public class MonitorWindow extends JFrame {
 	private int port;
 	private int threshold;
 
-	private final JmxMonitor monitor;
+	private JmxMonitor monitor;
 	private Timer timer;
 	private boolean noticeFlag;
 
@@ -65,7 +65,6 @@ public class MonitorWindow extends JFrame {
 		this.pack();
 		this.setVisible(true);
 
-		this.monitor = new JmxMonitorImpl();
 		JFrame frame = this;
 		this.noticeFlag = false;
 
@@ -77,7 +76,8 @@ public class MonitorWindow extends JFrame {
 				threshold = Integer.parseInt(txtThreshold.getText()) * 1024 * 1024;
 
 				try {
-					monitor.connect(host, port);
+					monitor = new JmxMonitorImpl(host, port);
+					monitor.connect();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage());
 					frame.dispose();
@@ -123,7 +123,6 @@ public class MonitorWindow extends JFrame {
 
 	private long getData() {
 		try {
-			monitor.connect(host, port);
 			CompositeData compData = (CompositeData) this.monitor.getMBean(OBJECT_NAME, ATTRIBUTE_NAME);
 			long data = (long) compData.get("used");
 			return data;

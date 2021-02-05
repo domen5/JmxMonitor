@@ -22,10 +22,17 @@ import javax.management.ReflectionException;
 public class JmxMonitorImpl implements JmxMonitor {
 	private JMXServiceURL url;
 	private MBeanServerConnection mbsc;
+	private final String host;
+	private final int port;
+
+	public JmxMonitorImpl(String host, int port) {
+		this.host = host;
+		this.port = port;
+	}
 
 	@Override
-	public void connect(String host, int port) throws IOException {
-		this.url = createConnectionURL(host, port);
+	public void connect() throws IOException {
+		this.url = createConnectionURL(this.host, this.port);
 		JMXConnector connector = JMXConnectorFactory.connect(url, null);
 		this.mbsc = connector.getMBeanServerConnection();
 	}
@@ -64,13 +71,13 @@ public class JmxMonitorImpl implements JmxMonitor {
 
 	@Override
 	public Object getMBean(String objectName, String name) throws Exception {
-				try{
-		return this.mbsc.getAttribute(new ObjectName(objectName), name);
-				}
-				catch(AttributeNotFoundException | InstanceNotFoundException |
-				MalformedObjectNameException | MBeanException | ReflectionException | IOException e){
-					e.printStackTrace();
-					throw new Exception("Something went wrong while getting the attribute");
-				}
+		try {
+			this.connect();
+			return this.mbsc.getAttribute(new ObjectName(objectName), name);
+		} catch (AttributeNotFoundException | InstanceNotFoundException | MalformedObjectNameException | MBeanException
+				| ReflectionException | IOException e) {
+			e.printStackTrace();
+			throw new Exception("Something went wrong while getting the attribute");
+		}
 	}
 }

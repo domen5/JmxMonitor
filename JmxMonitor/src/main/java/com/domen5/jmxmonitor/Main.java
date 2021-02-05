@@ -10,8 +10,8 @@ public class Main {
 				String host = input("Insert host [127.0.01]: ");
 				int port = intInput("Insert port[9999]: ");
 
-				JmxMonitor monitor = new JmxMonitorImpl();
-				monitor.connect(host, port);
+				JmxMonitor monitor = new JmxMonitorImpl(host, port);
+				monitor.connect();
 
 				System.out.println("\nMBeans count: " + monitor.getMBeanCount());
 
