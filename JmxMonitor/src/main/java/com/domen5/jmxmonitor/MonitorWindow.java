@@ -81,6 +81,7 @@ public class MonitorWindow extends JFrame {
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage());
 					frame.dispose();
+					System.exit(1);
 				}
 
 				DynamicTimeSeriesCollection dataset = new DynamicTimeSeriesCollection(1, MAX_NUM, new Second());
