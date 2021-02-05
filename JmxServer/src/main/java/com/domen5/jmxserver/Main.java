@@ -3,7 +3,7 @@ package com.domen5.jmxserver;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		JmxServer server = new JmxServer();
+		JmxServer server = new JmxServer();		
 		
 		System.out.println("Server up and wainting.");
 		Thread.sleep(5000);
