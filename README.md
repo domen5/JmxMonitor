@@ -1,36 +1,56 @@
 # JmxMonitor
- A simple program which monitors values of a Mbean attribute published on a remote JVM using the JMX API
 
-## Components
-JmxMonitor has a CLI Main application that offers you 2 options:
-* [1] Connect to a remote JMX Server application and get a MBean from it.
-* [2] Open a GUI to show a chart of the Heap Memory Usage.
+**JmxMonitor** is an application designed to monitor MBean attributes published on a remote JVM using the JMX API.
 
-## Developement
-This app was developed in Java 11 with Apache Maven and VS CODE.
+## Features
 
-## Compilinig and Running
-Main app JmxMonitor can be compiled with:
+JmxMonitor provides two main functionalities via its command-line interface (CLI):
+
+1. **Connect to a Remote JMX Server**: Access and retrieve MBeans from a remote JMX server.
+2. **Graphical User Interface (GUI)**: Display a chart illustrating Heap Memory Usage.
+
+An example application called "JmxServer" is provided in order to test JmxMonitor.
+
+## Development
+
+This application is developed using Java 11, Apache Maven, and Visual Studio Code.
+
+## Compilation and Execution
+
+### Compiling JmxMonitor
+
+To compile the main JmxMonitor application, use the following command:
+
 ```shell
 mvn package
 ```
 
-and run with:
+### Running JmxMonitor
+
+You can run the JmxMonitor application with:
+
 ```shell
-mvn exec:java -D exec.mainClass=com.domen5.jmxmonitor.Main
+mvn exec:java -Dexec.mainClass=com.domen5.jmxmonitor.Main
 ```
 
-JmxServer is an example app with one MBean named Count.
-It can be compiled with:
+### Compiling JmxServer
+
+The JmxServer example application, which includes a single MBean named `Count`, can be compiled with:
+
 ```shell
 mvn package
 ```
 
-It **must** be run with:
+### Running JmxServer
+
+To run JmxServer, use one of the following commands:
+
 ```shell
-java -cp target/JmxServer-1.0-SNAPSHOT.jar  -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false com.domen5.jmxserver.Main
+java -cp target/JmxServer-1.0-SNAPSHOT.jar -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false com.domen5.jmxserver.Main
 ```
-or 
+
+Alternatively, you can run it from the `target/classes` directory with:
+
 ```shell
-target/classes> java -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false com.domen5.jmxserver.Main
+java -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false com.domen5.jmxserver.Main
 ```
